@@ -1,0 +1,41 @@
+name:
+window:
+    width:
+    height:
+camera:
+    pos:
+    lookat:
+    focal_length:
+light:
+    pos:
+    color:
+    intensity:
+sphere:
+    center:
+    ray:
+    color:
+    translation:
+plane:
+    pos:
+    normal:
+    color:
+    translation:
+    rotation:
+cylinder:
+    st:
+    axe:
+    ray:
+    color:
+    translation:
+    rotation:
+cone:
+    st:
+    axe:
+    k:
+    color:
+    translation:
+    rotation:
+light:
+    pos:
+    color:
+    intensity:

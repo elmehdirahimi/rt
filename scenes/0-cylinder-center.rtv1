@@ -1,0 +1,19 @@
+name: 0-cylinder-center
+window:
+    width: 800
+    height: 800
+light:
+    pos: 0.0 0.0 -50.0
+    color: 255 255 255
+    intensity: 1
+camera:
+    pos: 0.0 0.0 -50.0
+    lookat: 0.0 0.0 0.0
+    focal_length: 1
+cylinder:
+    st: 0.0 0.0 0.0
+    axe: 0.0 1.0 0.0
+    ray: 1
+    color: 255 0 255
+    translation: 0.0 0.0 0.0
+    rotation: 0.0 0.0 0.0

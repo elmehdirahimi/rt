@@ -1,0 +1,43 @@
+name: 4-sphere-and-plane
+window:
+    width: 800
+    height: 800
+camera:
+    pos: 60.0 -20.0 -30.0
+    lookat: 0.0 0.0 0.0
+    focal_length: 1
+light:
+    pos: 30.0 -10.0 -50.0
+    color: 255 255 255
+    intensity: 1
+plane:
+    pos: 0.0 5.0 0.0
+    normal: 0.0 -1.0 0.0
+    color: 100 100 100
+    translation: 0.0 0.0 0.0
+    rotation: 0.0 0.0 0.0
+plane:
+    pos: 0.0 0.0 100.0
+    normal: 0.0 0.0 -1.0
+    color: 0 0 255
+    translation: 0.0 0.0 0.0
+    rotation: 0.0 0.0 0.0
+sphere:
+    center: 0.0 0.0 0.0
+    ray: 5
+    color: 255 0 0
+    translation: 0.0 0.0 0.0
+cylinder:
+    st: 0.0 0.0 0.0
+    axe: 0.0 -1.0 0.0
+    ray: 3
+    color: 0 255 0
+    translation: -6.0 0.0 0.0
+    rotation: 0.0 -10.0 50.0
+cone:
+    st: 0.0 0.0 0.0
+    axe: 0.0 -1.0 0.0
+    k: 0.7
+    color: 255 255 0
+    translation: 6.0 0.0 0.0
+    rotation: 0.0 10.0 -30.0
