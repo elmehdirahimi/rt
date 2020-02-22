@@ -43,8 +43,8 @@ int				cast_object(t_rt *r)
 	{
 		if (obj->type == tplane)
 			rat_trace_plane(r, obj);
-		else if (obj->type == tsphere)
-			rat_trace_sphere(r, obj);
+		else if (obj->type == tsphere && rat_trace_sphere(r, obj) != 0)
+				printf("hhhh\n");
 		else if (obj->type == tcylinder)
 			rat_trace_cylinder(r, obj);
 		else if (obj->type == tcone)

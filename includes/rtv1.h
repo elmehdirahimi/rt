@@ -18,6 +18,7 @@
 # include <math.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <stdio.h>
 
 # define ESC 53
 # define UP 126
@@ -66,6 +67,7 @@ typedef struct	s_mlx
 
 typedef struct	s_color
 {
+	long double trans;
 	long double	r;
 	long double	g;
 	long double	b;
@@ -77,6 +79,13 @@ typedef struct	s_vecteur
 	long double	y;
 	long double	z;
 }				t_vecteur;
+
+typedef struct s_repere
+{
+	t_vecteur	i;
+	t_vecteur	j;
+	t_vecteur	k;
+}				t_repere;
 
 typedef	struct	s_rayon
 {
@@ -113,10 +122,12 @@ typedef struct	s_camera
 typedef	struct	s_sphere
 {
 	t_vecteur	centre;
+	t_vecteur	axe;
 	int			rayon;
 	t_vecteur	tr;
 	t_vecteur	rot;
 	t_color		color;
+	t_repere	repere;
 }				t_sphere;
 
 typedef	struct	s_plane
@@ -126,6 +137,9 @@ typedef	struct	s_plane
 	t_vecteur	tr;
 	t_vecteur	rot;
 	t_color		color;
+	t_repere	repere;
+	double		limitx;
+	double		limity;
 }				t_plane;
 
 typedef struct	s_cylinder
@@ -159,8 +173,17 @@ typedef	struct	s_obj
 	t_vecteur		normal;
 	t_vecteur		inter;
 	void			*obj;
+	t_vecteur		angle;
 	struct s_obj	*next;
 }				t_obj;
+
+typedef struct		s_texture
+{
+	void			*img;
+	int				*buf;
+	int				w;
+	int				h;
+}					t_texture;
 
 typedef struct	s_holders
 {
@@ -203,13 +226,19 @@ typedef struct	s_rt
 	long double		sol1;
 	long double		sol2;
 	long double		dis;
+	t_texture      txt;
+	long double		Um;
+	long double		Vm;
+	long double		phi;
+	long double		theta;
 }				t_rt;
 
 int				cast_object(t_rt *r);
 int				cast_shadow(t_rt *r);
 int				distances(t_rt *r);
+int				distances_s(t_rt *r, void *obj, t_obj *o);
 long double		intersection_p(t_rt *r, t_plane *p);
-int				intersection_s(t_rt *r, t_sphere *s);
+int				intersection_s(t_rt *r, t_sphere *s, t_obj *o);
 int				intersection_c(t_rt *r, t_cylinder *c);
 int				intersection_co(t_rt *r, t_cone *co);
 void			get_normal(t_rt *r, t_obj *obj);
@@ -222,7 +251,7 @@ void			lighting(t_rt *r);
 t_vecteur		sum(t_vecteur v1, t_vecteur v2);
 t_vecteur		sub(t_vecteur v1, t_vecteur v2);
 t_vecteur		kv(t_vecteur v1, long double k);
-long double		dot(t_vecteur v1, t_vecteur v2);
+double			dot(t_vecteur v1, t_vecteur v2);
 t_vecteur		vcross(t_vecteur v1, t_vecteur v2);
 long double		module(t_vecteur v1);
 t_vecteur		normalise(t_vecteur v1);
@@ -290,4 +319,16 @@ int				check_file(char **tab);
 int				basic_test(char *str);
 void			check_format(t_holders *h, char **tab);
 void			check_format2(t_holders *h, char **tab);
+
+void	add_reperes(t_obj *obj_list);
+void	repere_plane(t_plane *plane);
+void	repere_sphere(t_sphere *sphere);
+int			load_texture(t_rt *r);
+int    getColorFromTexture(t_rt *r, void *obj, long double s, t_obj *o);
+void GetAngleSphere(t_rt *r);
+void GetAngleCylinder(t_rt *r);
+void GetAngleCone(t_rt *r);
+void GetAnglePlan(t_rt *r);
+void  print_vect(t_vecteur vect);
+
 #endif

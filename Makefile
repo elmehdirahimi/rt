@@ -39,7 +39,9 @@ SRC =	parsing.c\
 		tools5.c\
 		tools6.c\
 		tools7.c\
-		rtv1.c
+		rtv1.c\
+		loadTexture.c\
+		texture.c
 
 SRCS = $(addprefix srcs/, $(SRC))
 OBJ = $(SRC:%.c=objs/%.o)

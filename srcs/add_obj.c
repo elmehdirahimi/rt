@@ -34,6 +34,15 @@ t_sphere		*add_sphere(char **s, int i)
 		free_splited(splt);
 	}
 	s2->centre = translation(s2->centre, s2->tr);
+	s2->axe = create_v(0.0, 1.0, 0.0);
+	repere_sphere(s2);
+	s2->axe = rotatey(rotatez(rotatex(s2->axe, s2->rot.x), s2->rot.z), s2->rot.y);
+		s2->repere.i = normalise(rotatez(rotatey(rotatex(s2->repere.i, s2->rot.x), s2->rot.y), s2->rot.z));
+	s2->repere.j = normalise(rotatez(rotatey(rotatex(s2->repere.j, s2->rot.x), s2->rot.y), s2->rot.z));
+	s2->repere.k = normalise(rotatez(rotatey(rotatex(s2->repere.k, s2->rot.x), s2->rot.y), s2->rot.y));
+
+
+	
 	return (s2);
 }
 
@@ -90,8 +99,12 @@ t_plane			*add_plane(char **s, int i)
 		free_splited(splt);
 	}
 	p2->o = translation(p2->o, p2->tr);
-	p2->normal = rotatey(rotatez(rotatex(p2->normal, p2->rot.x), p2->rot.z),
-p2->rot.y);
+	repere_plane(p2);
+
+	p2->normal = rotatez(rotatey(rotatex(p2->normal, p2->rot.x), p2->rot.y), p2->rot.z);
+	p2->repere.i = normalise(rotatez(rotatey(rotatex(p2->repere.i, p2->rot.x), p2->rot.y), p2->rot.z));
+	p2->repere.j = normalise(rotatez(rotatey(rotatex(p2->repere.j, p2->rot.x), p2->rot.y), p2->rot.z));
+	p2->repere.k = normalise(rotatez(rotatey(rotatex(p2->repere.k, p2->rot.x), p2->rot.y), p2->rot.y));
 	return (p2);
 }
 

@@ -46,3 +46,17 @@ int				rat_trace_cone(t_rt *r, t_obj *obj)
 	}
 	return (0);
 }
+
+void GetAngleCone(t_rt *r)
+{
+    t_cone *obj;
+	obj = (t_cone *)r->obj->obj;
+    t_vecteur p;
+
+    p = sub(obj->st ,create_v(dot(r->obj->inter,create_v(1.0 ,0.0, 0.0)), dot(r->obj->inter, create_v(0.0 ,1.0, 0.0)), dot(r->obj->inter, create_v(0.0 ,0.0, -1.0))));
+//p = create_v(dot(r->obj->inter,obj->repere.i), dot(r->obj->inter, obj->repere.j), dot(r->obj->inter, obj->repere.k));
+	r->Um = (atan2(p.x, p.z) / (2.0 * M_PI));
+	r->Vm = (p.y + 5.0 /2 )/ 5.0;
+	r->Um -= floor(r->Um);
+	r->Vm -= floor(r->Vm);
+}

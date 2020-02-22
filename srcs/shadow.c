@@ -17,7 +17,7 @@ int				shadow_s(t_rt *r, t_obj *obj)
 	t_sphere	*sphere;
 
 	sphere = (t_sphere *)obj->obj;
-	if (intersection_s(r, sphere))
+	if (intersection_s(r, sphere, obj))
 		return (1);
 	return (0);
 }

@@ -6,11 +6,11 @@
 /*   By: slaanani <slaanani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 03:43:43 by slaanani          #+#    #+#             */
-/*   Updated: 2019/10/09 18:42:06 by slaanani         ###   ########.fr       */
+/*   Updated: 2020/01/30 20:07:42 by erahimi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../includes/rtv1.h"
 
 void			final_color(t_rt *r)
 {
@@ -22,21 +22,21 @@ void			final_color(t_rt *r)
 void			ambient(t_rt *r, t_light_lst *lst)
 {
 	r->ambient.r = 0.2 * r->obj->color.r * lst->light.color.r *
-lst->light.intensity / 255;
+		lst->light.intensity / 255;
 	r->ambient.g = 0.2 * r->obj->color.g * lst->light.color.g *
-lst->light.intensity / 255;
+		lst->light.intensity / 255;
 	r->ambient.b = 0.2 * r->obj->color.b * lst->light.color.b *
-lst->light.intensity / 255;
+		lst->light.intensity / 255;
 }
 
 void			diffuse(t_rt *r, long double d, t_light_lst *lst)
 {
 	r->diff.r = d * 0.6 *
-(double)(lst->light.color.r * lst->light.intensity / 255) * r->obj->color.r;
+		(double)(lst->light.color.r * lst->light.intensity / 255) * r->obj->color.r;
 	r->diff.g = d * 0.6 *
-(double)(lst->light.color.g * lst->light.intensity / 255) * r->obj->color.g;
+		(double)(lst->light.color.g * lst->light.intensity / 255) * r->obj->color.g;
 	r->diff.b = d * 0.6 *
-(double)(lst->light.color.b * lst->light.intensity / 255) * r->obj->color.b;
+		(double)(lst->light.color.b * lst->light.intensity / 255) * r->obj->color.b;
 }
 
 void			specular(t_rt *r, long double d, t_vecteur dir, t_light_lst *l)
@@ -56,6 +56,11 @@ void			specular(t_rt *r, long double d, t_vecteur dir, t_light_lst *l)
 	r->spec.r = 0.6 * tmp * l->light.color.r * l->light.intensity;
 	r->spec.g = 0.6 * tmp * l->light.color.g * l->light.intensity;
 	r->spec.b = 0.6 * tmp * l->light.color.b * l->light.intensity;
+}
+
+void  print_vect(t_vecteur vect)
+{
+	printf("(%Lf,%Lf,%Lf)\n",vect.x,vect.y,vect.z); ////////////// khasha t7ayad
 }
 
 void			lighting(t_rt *r)

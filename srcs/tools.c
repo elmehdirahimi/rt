@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../includes/rtv1.h"
 
 void		put_error(char *str)
 {
@@ -43,23 +43,47 @@ t_vecteur	create_v(long double x, long double y, long double z)
 }
 
 int			distances(t_rt *r)
-{
+{	
+	
 	if (((r->sol2 < r->sol1 || r->sol1 < MIN) && r->sol2 > MIN)
 			&& (r->sol2 < r->dis))
 	{
 		r->dis = r->sol2;
-		return (1);
+		     return (1);
+		
 	}
 	else if (((r->sol1 < r->sol2 || r->sol2 < MIN) && r->sol1 > MIN)
 			&& (r->sol1 < r->dis))
 	{
 		r->dis = r->sol1;
-		return (1);
+		     return (1);
 	}
 	else
 		return (0);
 }
 
+
+
+int			distances_s(t_rt *r, void *obj, t_obj *o)
+{	
+	
+	if (((r->sol2 < r->sol1 || r->sol1 < MIN) && r->sol2 > MIN)
+			&& (r->sol2 < r->dis) && getColorFromTexture(r,obj,r->sol2,o) != 0)
+	{
+		
+		r->dis = r->sol2;
+		     return (1);
+		
+	}
+	else if (((r->sol1 < r->sol2 || r->sol2 < MIN) && r->sol1 > MIN)
+			&& (r->sol1 < r->dis) && getColorFromTexture(r,obj,r->sol1,o) != 0)
+	{
+		r->dis = r->sol1;
+		     return (1);
+	}
+	else
+		return (0);
+}
 void		free_splited(char **tab)
 {
 	int i;

@@ -42,7 +42,7 @@ t_vecteur		kv(t_vecteur v1, long double k)
 	return (v3);
 }
 
-long double		dot(t_vecteur v1, t_vecteur v2)
+double		dot(t_vecteur v1, t_vecteur v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
