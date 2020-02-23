@@ -3,76 +3,76 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: slaanani <slaanani@student.42.fr>          +#+  +:+       +#+         #
+#    By: erahimi <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/07/30 23:51:03 by mderri            #+#    #+#              #
-#    Updated: 2019/10/10 13:36:05 by slaanani         ###   ########.fr        #
+#    Created: 2019/11/08 11:38:24 by erahimi           #+#    #+#              #
+#    Updated: 2019/12/20 20:54:57 by erahimi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
-CFLAGS1 = -Wextra -Wall -Werror -I /usr/local/include -I ./includes
-CFLAGS2 = -L srcs/libft -lft -I ./includes -I /usr/local/include -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit
 NAME = rtv1
 
-SRC =	parsing.c\
-		tools.c\
-		tools2.c\
-		tools3.c\
-		tools4.c\
-		sphere.c\
-		keyhandle.c\
-		vecteur_operations.c\
-		cone.c\
-		plan.c\
+SRCS =  main.c\
+		init.c\
+		vector.c\
+		draw_calcul.c\
+		plane.c\
 		cylinder.c\
-		add_obj.c\
-		raytracer.c\
-		lighting.c\
-		shadow.c\
-		get_normals.c\
-		transformations.c\
-		check_config_file.c\
-		check_objects.c\
-		parse_objects.c\
-		free_all.c\
-		tools5.c\
-		tools6.c\
-		tools7.c\
-		rtv1.c\
+		cone.c\
+		sphere.c\
+		parser.c\
+		init_parser.c\
+		add_objects.c\
+		color.c\
+		tools.c\
+		light_checker.c\
+		parse_tools.c\
+		closer.c\
 		loadTexture.c\
 		texture.c
 
-SRCS = $(addprefix srcs/, $(SRC))
-OBJ = $(SRC:%.c=objs/%.o)
-DIRECTORY = objs
+OBJ = main.o\
+	  init.o\
+	  vector.o\
+	  draw_calcul.o\
+	  plane.o\
+	  cylinder.o\
+	  cone.o\
+	  sphere.o\
+	  parser.o\
+	  init_parser.o\
+		add_objects.o\
+		color.o\
+		tools.o\
+		light_checker.o\
+		parse_tools.o\
+		closer.o\
+		loadTexture.o\
+		texture.o
+
+LIBFT = -L libft -lft
+
+CFLAGS = -Wall -Wextra -Werror
+
+CC = gcc $(CFLAGS)
+
+MLX = -L minilibx -lmlx -framework OpenGL -framework AppKit
 
 all: $(NAME)
 
-$(NAME): $(DIRECTORY) $(OBJ)
-	@make -C srcs/libft
-	@$(CC) -o $(NAME) $(OBJ) $(CFLAGS1) $(CFLAGS2)
-	@echo "\033[0;31m ================================================================================"
-	@echo "\033[0;31m|>>>>>>>>>>>>>>>>>>>>\033[0;35m{YOUR RTV1 HAS BEEN COMPILED SUCCESSFULLY}\033[0;31m<<<<<<<<<<<<<<<<<<|"
-	@echo "\033[0;31m ================================================================================"
+$(NAME): $(OBJ)
+	make -C libft libft.a
+	@$(CC) -o $@ $(OBJ) $(LIBFT) $(MLX)
 
-$(DIRECTORY):
-	@mkdir -p objs
-
-objs/%.o: srcs/%.c
-	@gcc $(CFLAGS1) -c $< -o $@
+%.o: %.c
+	$(CC) -c $< -o $@ 
 
 clean:
-	@rm -rf objs
+	@make clean -C libft/
 	@rm -f $(OBJ)
-	@make clean -C srcs/libft
-	@echo "\033[0;31m ================================================================================"
-	@echo "\033[0;31m|>>>>>>>>>>>>>>>>>>>>>\033[0;32m{YOUR RTV1 HAS BEEN CLEANED SUCCESSFULLY}\033[0;31m<<<<<<<<<<<<<<<<<<|"
-	@echo "\033[0;31m ================================================================================"
 
 fclean: clean
-	@make fclean -C srcs/libft
+	@make fclean -C libft/
 	@rm -f $(NAME)
 
 re: fclean all
-.PHONY: fclean, clean, re, all, rtv1
