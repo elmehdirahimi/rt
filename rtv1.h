@@ -87,7 +87,10 @@ typedef struct	s_cell
 	t_vect	base;
 	t_vect	toclosest;
 	t_vect	closest;
+	t_vect cellposition;
+	float		edgedistance;
 }				t_cell;
+
 typedef struct	s_voronoi
 {
 	float		valuechange;

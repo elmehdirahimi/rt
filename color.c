@@ -81,7 +81,7 @@ int  Shading(t_rt *rt, t_object* sphere)
 		if(swap(rt, temp))
 		{	
 			all[2] = diffuse_clac(rt,all[2],sphere, temp);
-		//	all[3] = addition(all[3], multiplication(temp->color, diffuse(rt,sphere,temp, 2)));
+			//all[3] = addition(all[3], multiplication(temp->color, diffuse(rt,sphere,temp, 2)));
 		}
 		temp = temp->next;     
 	}
