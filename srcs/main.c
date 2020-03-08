@@ -56,7 +56,7 @@ int				main(int argc, char **argv)
 		{
 			if (parser(rt) == 1)
 			{
-/*				  int i;
+		  int i;
 
   if (!(rt->ran = (t_vect *)malloc(256 * sizeof(t_vect))))
 		exit(0);
@@ -69,7 +69,7 @@ int				main(int argc, char **argv)
 		rt->ran[i] = normale(rt->ran[i]);
         i++;
 	}
-		*/		initialize(rt, argv[1]);
+				initialize(rt, argv[1]);
 				draw(rt);
 				mlx_hook(rt->win_ptr, 17, 0, rt_close, &rt);
 				mlx_hook(rt->win_ptr, 2, 0, key_press, rt);

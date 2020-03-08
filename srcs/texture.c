@@ -33,7 +33,8 @@ int		getColorFromTexture(t_rt *rt, t_object *obj,  double t)
 	t_vect inter;
 	t_vect p;
 
-
+	if(obj->tc == TEXTURE)
+{
 	inter = addition(multiplication(rt->cam.cam_ray.d, t), rt->cam.cam_ray.o);
 	p = soustraction(obj->position,constrector(dot(inter,constrector(0.0 ,0.0, 1.0)), dot(inter, constrector(0.0 ,-1.0, 0.0)), dot(inter, constrector(1.0 ,0.0, 0.0))));
 	GetAngle(obj, p);
@@ -48,5 +49,6 @@ int		getColorFromTexture(t_rt *rt, t_object *obj,  double t)
 	obj->color.x = (obj->txt.buf[j * obj->txt.w + i] >> 16) & 0xFF;
 	obj->color.y = (obj->txt.buf[j * obj->txt.w + i] >> 8) & 0xFF;
 	obj->color.z = obj->txt.buf[j * obj->txt.w + i] & 0xFF;
+}
 	return (1);
 }

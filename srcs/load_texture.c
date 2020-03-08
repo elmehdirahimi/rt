@@ -19,7 +19,7 @@ int			load_texture(t_rt *rt)
 	temp = rt->object;
 	while(temp)
 	{
-		temp->tc = 1;
+		temp->tc = 3;
 		temp->txt.img = mlx_xpm_file_to_image(rt->mlx_ptr, "xpm/4.xpm", &temp->txt.w,&temp->txt.h);
 		if (!temp->txt.img)
 			return (0);
