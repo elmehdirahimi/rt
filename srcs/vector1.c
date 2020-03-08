@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../rtv1.h"
 
 t_vect	addition(t_vect vect1, t_vect vect2)
 {

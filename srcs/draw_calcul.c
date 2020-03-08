@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../rtv1.h"
 
 t_object	*intersection(t_rt *rt, double max)
 {

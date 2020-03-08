@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../rtv1.h"
+
 
 int		cylinder_intersection(t_rt *rt, t_object *plane_temp, double *dist)
 {
@@ -41,14 +42,10 @@ int		cylinder_intersection(t_rt *rt, t_object *plane_temp, double *dist)
 	return (0);
 }
 
-void GetAngleCylinder(t_rt *r, t_object *plane_temp , t_vect inter)
+void GetAngleCylinder(t_object *plane_temp , t_vect p)
 {
-    t_vect p;
-
-p = soustraction(plane_temp->position,constrector(dot(inter,constrector(0.0 ,0.0, 1.0)), dot(inter, constrector(0.0 ,-1.0, 0.0)), dot(inter, constrector(1.0 ,0.0, 0.0))));
-//p = create_v(dot(r->obj->inter,obj->repere.i), dot(r->obj->inter, obj->repere.j), dot(r->obj->inter, obj->repere.k));
-	r->Um = (atan2(p.x, p.z) / (2.0 * M_PI));
-	r->Vm = (p.y + 5.0 /2 )/ 5.0;
-	r->Um -= floor(r->Um);
-	r->Vm -= floor(r->Vm);
+	plane_temp->txt.Um = (atan2(p.x, p.z) / (2.0 * M_PI));
+	plane_temp->txt.Vm = (p.y + 5.0 /2 )/ 5.0;
+	plane_temp->txt.Um -= floor(plane_temp->txt.Um);
+	plane_temp->txt.Vm -= floor(plane_temp->txt.Vm);
 }

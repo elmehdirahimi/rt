@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../rtv1.h"
 
 int		plane_intersection(t_rt *rt, t_object *plane_temp, double *dist)
 {
@@ -26,15 +26,10 @@ int		plane_intersection(t_rt *rt, t_object *plane_temp, double *dist)
 		return (1);
 	return (0);
 }
-
-void GetAnglePlan(t_rt *rt, t_object *plane_temp , t_vect inter)
+void GetAnglePlan(t_object *plane_temp , t_vect p)
 {
-    t_vect p;
-
-p = soustraction(plane_temp->position,constrector(dot(inter,constrector(0.0 ,0.0, 1.0)), dot(inter, constrector(0.0 ,-1.0, 0.0)), dot(inter, constrector(1.0 ,0.0, 0.0))));
-//p = create_v(dot(r->obj->inter,obj->repere.i), dot(r->obj->inter, obj->repere.j), dot(r->obj->inter, obj->repere.k));
-	rt->Um = p.x * 0.01;
-	rt->Vm = p.y * 0.01;
-	rt->Um -= floor(rt->Um);
-	rt->Vm -= floor(rt->Vm);
+	plane_temp->txt.Um = p.x * 0.01;
+	plane_temp->txt.Vm = p.y * 0.01;
+	plane_temp->txt.Um -= floor(plane_temp->txt.Um);
+	plane_temp->txt.Vm -= floor(plane_temp->txt.Vm);
 }

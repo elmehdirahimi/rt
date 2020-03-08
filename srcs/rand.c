@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../rtv1.h"
 
 double		ft_rand3dto1d(t_vect value, t_vect dot_dir)
 {

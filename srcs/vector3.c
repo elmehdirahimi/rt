@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../rtv1.h"
 
 t_vect	project(t_vect direction, t_vect rotation)
 {
@@ -46,6 +46,13 @@ t_vect	extraconsterctor(char *image, int *j)
 	vect.y = ft_atod(image, j);
 	vect.z = ft_atod(image, j);
 	return (vect);
+}
+
+t_vect  t(t_vect d, t_vect vect)
+{
+	if (dot(d, vect) <= 1e-5)
+			return (vect);
+		return (multiplication(vect, -1.0));
 }
 
 void  print_vect(t_vect vect)

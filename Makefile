@@ -35,7 +35,8 @@ SRCS = init.c\
 		texture.c\
 		voronoi.c\
 		rand.c\
-		perlin.c
+		perlin.c\
+		get_color.c
 
 OBJS = $(SRCS:.c=.o)
 

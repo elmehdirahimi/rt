@@ -10,60 +10,43 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../rtv1.h"
 
-void   GetAngle(t_rt *rt, t_object *obj , t_vect inter)
+void   GetAngle(t_object *obj , t_vect inter)
 {
 	if(obj->type == 1)
-		GetAngleSphere(rt,  obj , inter);
+		GetAngleSphere(obj , inter);
 	else if (obj->type == 2)
-		GetAnglePlan(rt,  obj , inter);
+		GetAnglePlan(obj , inter);
 	else if (obj->type == 3)
-		GetAngleCylinder(rt,  obj , inter);
+		GetAngleCylinder(obj , inter);
 	else if (obj->type == 4)
-		GetAngleCone(rt,  obj , inter);
+		GetAngleCone(obj , inter);
 }
 
 
 
 int		getColorFromTexture(t_rt *rt, t_object *obj,  double t)
 {
-	//int		i;
-	//int		j;
+	int		i;
+	int		j;
 	t_vect inter;
+	t_vect p;
 
 
 	inter = addition(multiplication(rt->cam.cam_ray.d, t), rt->cam.cam_ray.o);
-	/*
-	GetAngle(rt, obj, inter);
-	
-	i = rt->Um * rt->txt.w;
-	j = (1.0 - rt->Vm) * rt->txt.h - 0.001;
+	p = soustraction(obj->position,constrector(dot(inter,constrector(0.0 ,0.0, 1.0)), dot(inter, constrector(0.0 ,-1.0, 0.0)), dot(inter, constrector(1.0 ,0.0, 0.0))));
+	GetAngle(obj, p);
+	i = obj->txt.Um * obj->txt.w;
+	j = (1.0 - obj->txt.Vm) * obj->txt.h - 0.001;
 	i = (i < 0) ? 0 : i;
 	j = (j < 0) ? 0 : j;
-	i = (i > rt->txt.w - 1) ? rt->txt.w - 1 : i;
-	j = (j > rt->txt.h - 1) ? rt->txt.h - 1 : j;
-	
-	//obj->color.trans = (r->txt.buf[j * r->txt.w + i] >> 24) & 0xFF;
-	if(rt->txt.buf[j * rt->txt.w + i] == -16777216)
+	i = (i > obj->txt.w - 1) ? obj->txt.w - 1 : i;
+	j = (j > obj->txt.h - 1) ? obj->txt.h - 1 : j;
+	if (obj->txt.buf[j * obj->txt.w + i] == -16777216)
 			return(0);
-	obj->color.x = (rt->txt.buf[j * rt->txt.w + i] >> 16) & 0xFF;
-	obj->color.y = (rt->txt.buf[j * rt->txt.w + i] >> 8) & 0xFF;
-	obj->color.z = rt->txt.buf[j * rt->txt.w + i] & 0xFF;
-*/
-/*	if(r->obj->color.trans == 255.0 && r->obj->color.r == 0 && r->obj->color.g == 0 && r->obj->color.b == 0)
-	{
-		
-	}*/
-	//return (0);
-	//obj->color.x =  rand() % 255;
-//	obj->color.y =  rand() % 255;
-	//obj->color.z =  rand() % 255;*/
-t_vect p;
-
- obj->color = constrector(255.0, 0.0, 10.0);
-p = soustraction(obj->position , constrector(dot(inter,constrector(1.0 ,0.0, 0.0)), dot(inter, constrector(0.0 ,1.0, 0.0)), dot(inter, constrector(0.0 ,0.0, -1.0))));
-//voronoi_noise(obj, p);
-	perlin(rt->ran, p, obj);
+	obj->color.x = (obj->txt.buf[j * obj->txt.w + i] >> 16) & 0xFF;
+	obj->color.y = (obj->txt.buf[j * obj->txt.w + i] >> 8) & 0xFF;
+	obj->color.z = obj->txt.buf[j * obj->txt.w + i] & 0xFF;
 	return (1);
 }

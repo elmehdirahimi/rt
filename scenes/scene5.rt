@@ -13,7 +13,7 @@ translation(0 0 0)
 plane
 <
 color(255 100 0)
-position(0 0 0)
+position(0 0 -100)
 direction(0 0 1)
 rotation(0 0 0)
 translation(0 0 0)

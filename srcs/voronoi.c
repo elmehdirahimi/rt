@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../rtv1.h"
 
 
 
@@ -61,8 +61,8 @@ static t_vect	ft_voronoi(t_vect value)
 	return (ft_rand1dto3d(random));
 }
 
-void			voronoi_noise(t_object *obj, t_vect p)
+t_vect			voronoi_noise(t_vect p)
 {
 	
-	obj->color =  multiplication(ft_voronoi(multiplication(p, 1.0)), 255.0);
+	return (multiplication(ft_voronoi(multiplication(p, 1.0)), 255.0));
 }

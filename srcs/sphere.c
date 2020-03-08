@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../rtv1.h"
 
 int		sphere_intersection(t_rt *rt, t_object *sphere_temp, double *dist)
 {
@@ -36,20 +36,17 @@ int		sphere_intersection(t_rt *rt, t_object *sphere_temp, double *dist)
 	return (0);
 }
 
-void 	GetAngleSphere(t_rt *rt, t_object *sphere_temp , t_vect inter)
+void 	GetAngleSphere(t_object *sphere_temp , t_vect p)
 {
-    t_vect p;
 	double phi;
 	double theta;
 
-p = soustraction(sphere_temp->position,constrector(dot(inter,constrector(0.0 ,0.0, 1.0)), dot(inter, constrector(0.0 ,-1.0, 0.0)), dot(inter, constrector(1.0 ,0.0, 0.0))));
-//p = create_v(dot(r->obj->inter,obj->repere.i), dot(r->obj->inter, obj->repere.j), dot(r->obj->inter, obj->repere.k));
  phi = atan2(p.z, p.x);
 	theta = asin(p.y / sphere_temp->r) ;
 	
 //if (dot(obj->repere.k, create_v(0, 0, -1)) >= 0.0)
 //		u = (phi + M_PI) / (2.0 * M_PI);
 //	else
-	rt->Um = 1 - (phi + M_PI) / (2.0 * M_PI);
-    rt->Vm = (theta + M_PI / 2.0) / M_PI;
+	sphere_temp->txt.Um = 1 - (phi + M_PI) / (2.0 * M_PI);
+    sphere_temp->txt.Vm = (theta + M_PI / 2.0) / M_PI;
 }

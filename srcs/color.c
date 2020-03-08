@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../rtv1.h"
 
 double		diffuse(t_rt *rt, t_object *sphere, t_light *temp, int choix)
 {
@@ -55,13 +55,13 @@ int			swap(t_rt *rt, t_light *temp)
 	return (x ? 0 : 1);
 }
 
-t_vect		diffuse_clac(t_rt *rt, t_vect df, t_object *o, t_light *l)
+t_vect		diffuse_clac(t_rt *rt, t_vect df, t_object *o, t_light *l, t_vect c)
 {
 	t_vect	d;
 
-	d = addition(df, multiplication(constrector(o->color.x *
-			(l->color.x / 255.0), o->color.y *
-			(l->color.y / 255.0), o->color.z *
+	d = addition(df, multiplication(constrector(c.x *
+			(l->color.x / 255.0), c.y *
+			(l->color.y / 255.0), c.z *
 			(l->color.z / 255.0)),
 			diffuse(rt, o, l, 1)));
 	return (d);
@@ -75,14 +75,14 @@ int			shading(t_rt *rt, t_object *sphere)
 
 	all[2] = constrector(0, 0, 0);
 	all[3] = constrector(0, 0, 0);
-	color = sphere->color;
+	color = get_color(rt, sphere);
 	all[1] = multiplication(color, 0.15);
 	temp = rt->light;
 	while (temp)
 	{
 		if (swap(rt, temp))
 		{
-			all[2] = diffuse_clac(rt, all[2], sphere, temp);
+			all[2] = diffuse_clac(rt, all[2], sphere, temp, color);
 			all[3] = addition(all[3], multiplication(temp->color,
 						diffuse(rt, sphere, temp, 2)));
 		}
@@ -93,3 +93,40 @@ int			shading(t_rt *rt, t_object *sphere)
 			clamp(color.y, 255.0, 0.0), clamp(color.z, 255.0, 0.0));
 	return (((int)color.x << 16) | ((int)color.y << 8) | (int)color.z);
 }
+
+/*
+t_vect  diffuse_clac(t_rt *rt,t_vect df,t_object *o, t_light *l)
+{
+	t_vect d;
+	
+	d = addition(df,multiplication(constrector(o->color.x * (l->color.x / 255.0),
+	 	o->color.y * (l->color.y / 255.0),o->color.z * (l->color.z / 255.0)),
+	 	 diffuse(rt, o,l, 1)));
+	return(d);
+}
+
+int  shading(t_rt *rt, t_object* sphere)
+{
+	t_vect all[4];
+	t_vect color;
+	t_light *temp;
+
+	all[2] = constrector(0, 0 ,0);
+	all[3] = constrector(0, 0 ,0);
+	color = sphere->color;
+	all[1] =  multiplication(color, 0.15);
+	temp = rt->light;
+	while(temp)
+	{
+		if(swap(rt, temp))
+		{	
+			all[2] = diffuse_clac(rt,all[2],sphere, temp);
+			all[3] = addition(all[3], multiplication(temp->color, diffuse(rt,sphere,temp, 2)));
+		}
+		temp = temp->next;     
+	}
+	color =  addition(addition(all[1],all[2]), all[3]);
+	color = constrector(clamp(color.x, 255.0, 0.0),\
+	 clamp(color.y, 255.0, 0.0), clamp(color.z, 255.0, 0.0));
+	return (((int)color.x << 16) | ((int)color.y << 8) | (int)color.z );
+}*/

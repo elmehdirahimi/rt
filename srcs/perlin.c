@@ -33,7 +33,7 @@ double	ft_acc(t_vect c[2][2][2], t_vect v, double acc)
 	t_vect		weight;
 	t_vect		noise;
 
-	noise = v; constrector(v.x * v.x * (3.0 - 2.0 * v.x), v.y * v.y * (3.0 - 2.0 * v.y),
+	noise = constrector(v.x * v.x * (3.0 - 2.0 * v.x), v.y * v.y * (3.0 - 2.0 * v.y),
 			v.z * v.z * (3.0 - 2.0 * v.z));
 	i = 0;
 	while (i < 2)
@@ -101,7 +101,7 @@ double	perlin_noise(t_vect *ran, t_vect v, int depth)
 	return (fabs(acc));
 }
 
-void perlin(t_vect *ran, t_vect v, t_object *obj)
+t_vect perlin(t_vect *ran, t_vect v, t_object *obj)
 {
-    obj->color = multiplication(obj->color, 9.0 * perlin_noise(ran, v, 10));
+    return (multiplication(obj->color, 9.0 * perlin_noise(ran, v, 2.0)));
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../rtv1.h"
 
 t_vect		get_normal(t_vect vect, t_object *object, t_rt *rt)
 {
@@ -18,23 +18,21 @@ t_vect		get_normal(t_vect vect, t_object *object, t_rt *rt)
 	t_vect	temp;
 
 	if (object->type == 1)
-		return (normale(soustraction(vect, object->position)));
+		return (t(rt->cam.cam_ray.d, normale(soustraction(vect,
+		 object->position))));
 	if (object->type == 2)
-	{
-		if (dot(rt->cam.cam_ray.d, object->direction) <= 1e-5)
-			return (object->direction);
-		return (multiplication(object->direction, -1.0));
-	}
+		return (t(rt->cam.cam_ray.d, object->direction));
 	v2 = soustraction(rt->cam.cam_ray.o, object->position);
 	temp = soustraction(soustraction(vect, object->position),
 			multiplication(object->direction, dot(rt->cam.cam_ray.d,
 					object->direction) * rt->t + dot(v2, object->direction)));
 	if (object->type == 3)
-		return (normale(temp));
+		return (t(rt->cam.cam_ray.d, normale(temp)));
 	temp = multiplication(object->direction, dot(rt->cam.cam_ray.d,
 				object->direction) * rt->t + dot(v2, object->direction));
 	temp = multiplication(temp, 1 + tan(object->r) * tan(object->r));
-	return (normale(soustraction(soustraction(vect, object->position), temp)));
+	return (t(rt->cam.cam_ray.d, normale(soustraction(soustraction(vect, 
+	object->position), temp))));
 }
 
 t_vect		get_reflected(t_vect vect, t_vect v, t_object *object, t_rt *rt)

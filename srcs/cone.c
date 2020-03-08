@@ -10,14 +10,48 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../rtv1.h"
 
-int		cone_intersection(t_rt *rt, t_object *cone_temp, double *dist)
+/*
+static int		solution_cone(t_rt *rt, double all[7], double *dist, t_object *cone_temp)
+{
+	if (all[4] > -1e-4 && all[5] > -1e-4)
+	{
+		if (all[4] < all[5] && getColorFromTexture(rt, cone_temp, all[4]))
+			*dist =  all[4];
+		else
+		{
+			if (getColorFromTexture(rt, cone_temp, all[5]))
+				*dist =  all[5];
+		}
+	}	
+	else if (all[4] < 1e-4 && all[5] < 0.0)
+		return (0);
+	else
+	{
+		if (all[4] < all[5])
+		{
+			if (getColorFromTexture(rt, cone_temp, all[4]))
+				*dist =  all[4];
+		}
+		else
+		{
+			if (getColorFromTexture(rt, cone_temp, all[5]))
+				*dist =  all[5];
+		}
+	}
+	if (*dist <= 1e-4  && getColorFromTexture(rt, cone_temp, *dist))
+		return (0);
+	return (1);
+}
+
+
+int				cone_intersection(t_rt *rt, t_object *cone_temp, double *dist)
 {
 	t_vect vect;
 	double all[7];
 
-	all[6] = tan(clamp(cone_temp->r, 180.0, 0.0) * M_PI / 180.0);
+	all[6] = tan(cone_temp->r);
 	vect = soustraction(rt->cam.cam_ray.o, cone_temp->position);
 	all[0] = dot(rt->cam.cam_ray.d, rt->cam.cam_ray.d) - (1.0 + all[6] *
 			all[6]) * pow(dot(rt->cam.cam_ray.d, cone_temp->direction), 2);
@@ -27,28 +61,49 @@ int		cone_intersection(t_rt *rt, t_object *cone_temp, double *dist)
 	all[2] = dot(vect, vect) - (1.0 + all[6] * all[6]) *
 		dot(vect, cone_temp->direction) * dot(vect, cone_temp->direction);
 	all[3] = all[1] * all[1] - 4.0 * all[0] * all[2];
-	if (all[3] >= 0.0)
-	{
-		all[4] = (-all[1] - sqrt(all[3])) / (2.0 * all[0]);
-		all[5] = (-all[1] + sqrt(all[3])) / (2.0 * all[0]);
-  if (all[5] > all[4] && all[4] > 1e-4 && getColorFromTexture(rt, cone_temp, all[4]))
-      *dist = all[4];
+	if (all[3] < 0.0)
+		return (0);
+	all[4] = (-all[1] - sqrt(all[3])) / (2.0 * all[0]);
+	all[5] = (-all[1] + sqrt(all[3])) / (2.0 * all[0]);
+	return (solution_cone(rt, all, dist, cone_temp));
+}*/
+
+int  cone_intersection(t_rt *rt, t_object *cone_temp, double *dist)
+{
+    t_vect vect;
+    double a;
+    double b;
+    double c;
+    double delta;
+    double t1;
+    double t2;
+    double k;
+
+    k = tan(cone_temp->r);
+    vect = soustraction(rt->cam.cam_ray.o, cone_temp->position);
+    a = dot(rt->cam.cam_ray.d, rt->cam.cam_ray.d) - (1.0 + k * k) * dot(rt->cam.cam_ray.d, cone_temp->direction) * dot(rt->cam.cam_ray.d, cone_temp->direction);
+    b = 2.0 * (dot(rt->cam.cam_ray.d, vect) - (1.0 + k * k) *  dot(rt->cam.cam_ray.d, cone_temp->direction) * dot(vect, cone_temp->direction));
+    c = dot(vect, vect) - (1.0 + k * k) * dot(vect, cone_temp->direction) * dot(vect, cone_temp->direction);
+    delta = b * b - 4.0 * a * c;
+      if (delta >= 0.0)
+     {
+    t1 = (- b - sqrt(delta)) / (2.0 * a);
+    t2 = (- b + sqrt(delta)) / (2.0 * a);
+  //  light_inter(rt, t1);
+   // light_inter(rt, t2);
+  if (t2 > t1 && t1 > 1e-4 && getColorFromTexture(rt, cone_temp, t1))
+      *dist = t1;
     else
-      *dist = all[5];
+      *dist = t2;
     if(*dist >= 1e-4 && getColorFromTexture(rt, cone_temp, *dist))
      return (1);
      }
-     return (0);;
+     return (0);
 }
-
-void GetAngleCone(t_rt *rt, t_object *cone_temp, t_vect inter)
+void GetAngleCone(t_object *cone_temp, t_vect p)
 {
-  t_vect p;
-
-    p = soustraction(cone_temp->position , constrector(dot(inter,constrector(1.0 ,0.0, 0.0)), dot(inter, constrector(0.0 ,1.0, 0.0)), dot(inter, constrector(0.0 ,0.0, -1.0))));
-//p = create_v(dot(r->obj->inter,obj->repere.i), dot(r->obj->inter, obj->repere.j), dot(r->obj->inter, obj->repere.k));
-	rt->Um = (atan2(p.x, p.z) / (2.0 * M_PI));
-	rt->Vm = (p.y + 5.0 /2 )/ 5.0;
-	rt->Um -= floor(rt->Um);
-	rt->Vm -= floor(rt->Vm);
+	cone_temp->txt.Um = (atan2(p.x, p.z) / (2.0 * M_PI));
+	cone_temp->txt.Vm = (p.y + 5.0 /2 )/ 5.0;
+	cone_temp->txt.Um -= floor(cone_temp->txt.Um);
+	cone_temp->txt.Vm -= floor(cone_temp->txt.Vm);
 }

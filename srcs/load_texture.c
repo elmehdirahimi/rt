@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   w3d_load_texture.c                                 :+:      :+:    :+:   */
+/*   load_texture.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oouklich <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,13 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../rtv1.h"
 
 int			load_texture(t_rt *rt)
 {
-		rt->txt.img = mlx_xpm_file_to_image(rt->mlx_ptr, "xpm/7.xpm", &rt->txt.w,&rt->txt.h);
-		if (!rt->txt.img)
+	t_object *temp;
+
+	temp = rt->object;
+	while(temp)
+	{
+		temp->tc = 1;
+		temp->txt.img = mlx_xpm_file_to_image(rt->mlx_ptr, "xpm/4.xpm", &temp->txt.w,&temp->txt.h);
+		if (!temp->txt.img)
 			return (0);
-		rt->txt.buf = (int *)mlx_get_data_addr(rt->txt.img, &rt->bpp,&rt->size_line, &rt->endian);
+		temp->txt.buf = (int *)mlx_get_data_addr(temp->txt.img, &rt->bpp,&rt->size_line, &rt->endian);
+		temp = temp->next;
+	}
 	return (1);
 }
